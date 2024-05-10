@@ -1,0 +1,11 @@
+<!-- weather-page.component.html -->
+<div>
+  <div>
+    <form action="">
+      <label for="ciade">Cidade</label>
+      <input type="textarea" class="input" id="cidade" name="cidade" placeholder="Digite a cidade que quer saber a temperatura" [(ngModel)]="pensamento.conteudo">
+    </form>
+  </div>
+  <h2>Weather Information</h2>
+  <p>Temperature: {{ singleWeather.main.temp - 273.15 | number: '1.2-2' }} °C</p>
+</div>
