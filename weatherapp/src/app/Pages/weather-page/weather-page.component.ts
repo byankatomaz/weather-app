@@ -1,30 +1,24 @@
-import { env } from './../../Environments/env';
 import { Component } from '@angular/core';
-import { WeatherService } from '../../Service/weather.service';
 import { WeatherData } from '../../Interface/weather';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { WeatherService } from '../../Service/Weather/weather.service';
+import { CityService } from '../../Service/City/city.service';
 
 @Component({
   selector: 'app-weather-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './weather-page.component.html',
-  styleUrl: './weather-page.component.css'
+  styleUrls: ['./weather-page.component.css'], // Adicione "style**s**"
 })
 export class WeatherPageComponent {
+  city: string = ''; // Variável para o nome da cidade
 
-  city: string = ""
-
-  // Inicializando um único objeto do tipo WeatherData
   singleWeather: WeatherData = {
-    coord: { lon: 0, lat: 0 }, // valores padrão
+    coord: { lon: 0, lat: 0 },
     weather: [
-      {
-        id: 0,
-        main: "Clear",
-        description: "clear sky",
-        icon: "01d",
-      },
+      { id: 0, main: "Clear", description: "clear sky", icon: "01d" },
     ],
     base: "stations",
     main: {
@@ -51,18 +45,25 @@ export class WeatherPageComponent {
     cod: 200,
   };
 
+  constructor(
+    private weatherService: WeatherService,
+    private cityService: CityService
+  ) {}
 
-  constructor(private service: WeatherService) {
-    // Declaração da variável dentro do construtor
-    const config = env(this.city); // Obter a configuração a partir de city
-    console.log(config.apiBaseUrl); // Exemplo de uso do objeto config
-  }
   ngOnInit(): void {
+    const city = this.cityService.getCity();
+    console.log("Initial city:", city);
 
-    this.service.getWeather().subscribe((weather) => {
-      this.singleWeather = weather
-    })
-
+    this.weatherService.getWeather(city).subscribe((weather) => {
+      this.singleWeather = weather;
+    });
   }
 
+  setCity(newCity: string): void {
+    this.cityService.setCity(newCity);
+
+    this.weatherService.getWeather(newCity).subscribe((weather) => {
+      this.singleWeather = weather;
+    });
+  }
 }
