@@ -52,11 +52,11 @@ export class WeatherPageComponent {
   };
 
 
-  constructor(
-    private service: WeatherService,
-    const config = env(this.city);
-  ) { }
-
+  constructor(private service: WeatherService) {
+    // Declaração da variável dentro do construtor
+    const config = env(this.city); // Obter a configuração a partir de city
+    console.log(config.apiBaseUrl); // Exemplo de uso do objeto config
+  }
   ngOnInit(): void {
 
     this.service.getWeather().subscribe((weather) => {
