@@ -1,0 +1,20 @@
+.weather-background {
+  /* Definindo a imagem de fundo */
+  background-image: url('../../../assets/image/clima-frio.jpg');
+
+  /* Ajustando a imagem para preencher o fundo de forma apropriada */
+  background-size: cover;
+
+  /* Centraliza a imagem no fundo */
+  background-position: center;
+
+  /* Permite que o fundo se repita ou não; aqui, não se repete */
+  background-repeat: no-repeat;
+
+  /* Adicionando cor de fundo de suporte caso a imagem não carregue */
+  background-color: #f0f0f0;
+
+  /* Outras propriedades para definir tamanho, padding, etc. */
+  height: 100vh; /* Para ocupar a altura total da janela */
+  width: 100%; /* Para ocupar a largura total */
+}
