@@ -1,23 +1,66 @@
-<div class="weather-background w-full">
-  <div class="bg-white w-3/6">
-    <form>
-      <label for="cidade">Cidade:</label>
-      <input
-        type="text"
-        class="input"
-        id="cidade"
-        name="cidade"
-        placeholder="Digite a cidade"
-        [(ngModel)]="city"
-      />
-      <button (click)="setCity(city)">Pesquisar</button>
+<div class="w-full h-screen flex justify-center items-center degrade relative">
+  <div
+    class="w-11/12 bg-white bg-opacity-25 h-5/6 rounded-xl flex flex-col justify-center items-center"
+  >
+    <form
+      (ngSubmit)="setCity(city)"
+      class="flex justify-center items-center h-full w-full flex-col gap-10"
+    >
+      <label
+        for="Cidade"
+        class="font-bebasNeue text-4xl font-semibold text-white text-opacity-55"
+      >
+        Pesquise sobre a previsão do tempo
+      </label>
+      <div
+        class="h-15 w-2/4 flex justify-between bg-slate-800 bg-opacity-75 rounded-lg"
+      >
+        <input
+          type="text"
+          class="w-5/6 p-4 bg-transparent text-white outline-none"
+          id="cidade"
+          name="cidade"
+          placeholder="Digite aqui a cidade que deseja"
+          [(ngModel)]="city"
+        />
+        <button
+          class="p-4 text-white text-opacity-40 hover:bg-black hover:bg-opacity-45 hover:text-neutral-400"
+          type="submit"
+        >
+          Pesquisar
+        </button>
+      </div>
     </form>
-    <div *ngIf="singleWeather">
-      <h2>Informações Meteorológicas para {{ singleWeather.name }}</h2>
-      <p>
-        Temperatura:
-        {{ singleWeather.main.temp - 273.15 | number : "1.2-2" }} °C
-      </p>
+    <div
+      *ngIf="singleWeather.name !== 'Unknown'"
+      class="w-[70%] h-5/6 mt-10 flex justify-center items-center flex-col gap-2 font-bold mb-10"
+    >
+      <div
+        class="p-6 rounded-lg shadow-md flex flex-row text-center h-full gap-16"
+        [ngClass]="{
+          'text-red-800 container-background-quente': isHot(singleWeather.main.temp),
+          'text-blue-500 container-background-frio': !isHot(singleWeather.main.temp)
+        }"
+      >
+        <div class="flex flex-col justify-center gap-3">
+          <h2>Informações<br/> Meteorológicas:<br /></h2>
+          <p>Cidade: {{ singleWeather.name }}</p>
+          <p>
+            Temp:
+            {{ singleWeather.main.temp - 273.15 | number : "1.2-2" }} °C
+          </p>
+        </div>
+
+        <img
+          [src]="
+            isHot(singleWeather.main.temp)
+              ? 'assets/image/sol.png'
+              : 'assets/image/frio.png'
+          "
+          class="w-20 h-20 mt-10"
+          alt="Weather Icon"
+        />
+      </div>
     </div>
   </div>
 </div>
