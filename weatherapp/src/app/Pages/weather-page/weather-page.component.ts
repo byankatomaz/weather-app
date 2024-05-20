@@ -10,10 +10,11 @@ import { CityService } from '../../Service/City/city.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './weather-page.component.html',
-  styleUrls: ['./weather-page.component.css'], // Adicione "style**s**"
+  styleUrls: ['./weather-page.component.css'],
 })
 export class WeatherPageComponent {
-  city: string = ''; // Variável para o nome da cidade
+  isModalVisible = false;
+  city: string = '';
 
   singleWeather: WeatherData = {
     coord: { lon: 0, lat: 0 },
@@ -48,16 +49,8 @@ export class WeatherPageComponent {
   constructor(
     private weatherService: WeatherService,
     private cityService: CityService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {
-    const city = this.cityService.getCity();
-    console.log("Initial city:", city);
-
-    this.weatherService.getWeather(city).subscribe((weather) => {
-      this.singleWeather = weather;
-    });
-  }
 
   setCity(newCity: string): void {
     this.cityService.setCity(newCity);
@@ -66,4 +59,11 @@ export class WeatherPageComponent {
       this.singleWeather = weather;
     });
   }
+
+  isHot(temp: number) {
+    console.log(temp)
+    return temp > 298;
+  }
+
+
 }
